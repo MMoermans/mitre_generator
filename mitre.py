@@ -5,7 +5,8 @@ Each technique is scored by how often it appears in the input, so the layer beco
 IDs are checked against the official ATT&CK data: unknown IDs are dropped, revoked IDs are mapped
 to their replacement and technique names are added.
 
-Run without arguments for the interactive prompts, or see ``python mitre.py --help``.
+Run without arguments for the interactive prompts, or see ``mitre-generator --help``
+(``python mitre.py --help`` from a checkout).
 """
 
 from __future__ import annotations
@@ -303,9 +304,8 @@ HEX_COLOR = re.compile(r"^#[0-9a-fA-F]{6}$")
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
     p = argparse.ArgumentParser(
-        prog="mitre.py",
         description="Create an ATT&CK Navigator layer (heatmap) from technique IDs in CSV or text files.",
-        epilog="Example: python mitre.py incidents.csv -o layer.json --name 'Q3 incidents' --validate",
+        epilog="Example: mitre-generator incidents.csv -o layer.json --name 'Q3 incidents' --validate",
     )
     p.add_argument("inputs", nargs="*", help="CSV or text files with technique IDs ('-' for stdin)")
     p.add_argument("-o", "--output", help="output JSON file ('-' for stdout; default: <first input>_layer.json)")

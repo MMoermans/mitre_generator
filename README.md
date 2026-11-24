@@ -17,10 +17,23 @@ a set of incidents, threat reports or detection rules.
 - **Gradient scaled to your data**, with a comment on each technique saying how often it was seen
 - Standard library only
 
+## Install
+
+```bash
+pip install git+https://github.com/MMoermans/mitre_generator.git
+```
+
+That gives you the `mitre-generator` command (`python -m mitre` works too). Upgrade with
+`pip install -U git+https://github.com/MMoermans/mitre_generator.git`. Without installing, run
+`python mitre.py` from a clone: it only needs Python 3.10+.
+
+The ATT&CK data for `--validate` is cached in `~/.cache/mitre_generator` (or `$XDG_CACHE_HOME`).
+Delete that folder to free the space (about 1 MB per version) or force a fresh download.
+
 ## Usage
 
 ```bash
-python mitre.py examples/incidents.csv --name "Q3 incidents" --validate
+mitre-generator examples/incidents.csv --name "Q3 incidents" --validate
 ```
 
 ```
@@ -31,7 +44,7 @@ Most frequent: T1059 Command and Scripting Interpreter (5), T1059.001 PowerShell
 Open the [Navigator](https://mitre-attack.github.io/attack-navigator/), choose **Open Existing
 Layer → Upload from local**, and select the JSON file.
 
-Running `python mitre.py` without arguments asks for the input and output file names, as the
+Running `mitre-generator` without arguments asks for the input and output file names, as the
 first version did.
 
 | Option | |
@@ -51,17 +64,17 @@ More examples:
 
 ```bash
 # Several reports at once, straight to stdout
-python mitre.py report1.txt report2.txt -o - > combined.json
+mitre-generator report1.txt report2.txt -o - > combined.json
 
 # IDs from another tool
-grep -oE 'T[0-9]{4}(\.[0-9]{3})?' rules/*.yml | python mitre.py - -o detections.json --name Detections
+grep -oE 'T[0-9]{4}(\.[0-9]{3})?' rules/*.yml | mitre-generator - -o detections.json --name Detections
 ```
 
 ## Development
 
 ```bash
 python -m venv .venv && . .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements-dev.txt
+pip install -e ".[dev]"
 pytest && ruff check .
 ```
 
@@ -76,4 +89,4 @@ The tests use a small fake ATT&CK dataset, so they run without network access.
   now runs up to the highest score
 - The platform filter listed outdated names such as "Azure AD" and "PRE", which hid techniques. It
   is now left out unless you ask for one
-- Command-line options, multiple inputs, stdin, validation, revoked-ID mapping, tests and CI
+- Installable with pip as `mitre-generator`; command-line options, multiple inputs, stdin, validation, revoked-ID mapping, tests and CI

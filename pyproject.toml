@@ -1,3 +1,37 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mitre-generator"
+dynamic = ["version"]
+description = "Turn MITRE ATT&CK technique IDs into an ATT&CK Navigator heatmap layer"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Michiel Moermans" }]
+keywords = ["mitre", "att&ck", "attack-navigator", "threat-intelligence", "cti"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Environment :: Console",
+    "Topic :: Security",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+mitre-generator = "mitre:main"
+
+[project.urls]
+Homepage = "https://github.com/MMoermans/mitre_generator"
+
+[tool.setuptools]
+py-modules = ["mitre"]
+
+[tool.setuptools.dynamic]
+version = { attr = "mitre.__version__" }
+
 [tool.ruff]
 line-length = 120
 target-version = "py310"
