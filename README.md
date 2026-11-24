@@ -65,7 +65,6 @@ More examples:
 ```bash
 # Several reports at once, straight to stdout
 mitre-generator report1.txt report2.txt -o - > combined.json
-
 # IDs from another tool
 grep -oE 'T[0-9]{4}(\.[0-9]{3})?' rules/*.yml | mitre-generator - -o detections.json --name Detections
 ```
